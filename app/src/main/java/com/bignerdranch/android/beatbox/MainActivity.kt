@@ -33,6 +33,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        beatBox.release()
+        }
+
     /**
      * Создание объекта SoundHolder
      */
@@ -40,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.viewModel = SoundViewModel()
+            binding.viewModel = SoundViewModel(beatBox)
         }
 
         fun bind(sound: Sound) {
@@ -72,6 +77,7 @@ class MainActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: SoundHolder, position: Int) {
             val sound = sound[position]
             holder.bind(sound)
+
         }
 
         override fun getItemCount() = sound.size
